@@ -51,8 +51,8 @@ public class SlangWord {
         }
     }
 
-    //mode 1: finding defination by slang word
-    public static void findBySlangWord(){
+    // mode 1: finding defination by slang word
+    public static void findBySlangWord() {
         clearScreen();
 
         System.out.println("-----Finding defination by slang word-----");
@@ -65,8 +65,28 @@ public class SlangWord {
         System.out.println(info + " meaning " + resultInfo);
 
         pauseScreen();
-        //showMenu();
+        // showMenu();
     }
 
-    
+    // mode 2: finding slang word by defination
+    public static void findByDefination() {
+        clearScreen();
+
+        System.out.println("-----Finding slang word by defination-----");
+        System.out.println("Please! Enter slang word which you want to search: ");
+        String defination = word.nextLine();
+        historySlangWord.add(defination);
+
+        List<String> result = new ArrayList();
+        for (String i : dictionarySlang.keySet()) {
+            if (dictionarySlang.get(i).contains(defination)) {
+                result.add(i);
+            }
+        }
+        System.out.println("Slang word: ");
+        System.out.println(result);
+        pauseScreen();
+        // showMenu();
+    }
+
 }
