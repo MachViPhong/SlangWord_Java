@@ -77,7 +77,7 @@ public class SlangWord {
         String defination = word.nextLine();
         historySlangWord.add(defination);
 
-        List<String> result = new ArrayList();
+        List<String> result = new ArrayList<>();
         for (String i : dictionarySlang.keySet()) {
             if (dictionarySlang.get(i).contains(defination)) {
                 result.add(i);
@@ -100,5 +100,49 @@ public class SlangWord {
 
         pauseScreen();
         // showMenu();
+    }
+
+    // mode 4: Adding a new slang word into slang.txt
+    public static void addNewSW() {
+        clearScreen();
+
+        System.out.println("Adding a new slang word into file slang.txt");
+
+        System.out.println("Please! Enter a new slang word which you want to add: ");
+        String sw = word.nextLine();
+        sw = sw.toUpperCase();
+
+        System.out.println("Please! Enter its defination which you want to add: ");
+        String defi = word.nextLine();
+
+        List<String> newdf = new ArrayList<>();
+
+        newdf.add(defi);
+        if (dictionarySlang.containsKey(sw)) {
+
+            String choose;
+            do {
+                System.out.println("Do you want to override this slang word (because this slang word has existed)");
+                System.out.println("(Y/N): ");
+                choose = word.nextLine();
+            } while ((choose.equals("Y") == false) && (choose.equals("y") == false) && (choose.equals("N") == false) && (choose.equals("n") == false));
+            if (choose.equals("Y") || choose.equals("y")){
+                dictionarySlang.put(sw, newdf);
+            }
+            else {
+                List<String> oldDefi = dictionarySlang.get(sw);
+                for(String i : oldDefi){
+                    newdf.add(i);
+                }
+                dictionarySlang.put(sw, newdf);
+            }
+        }
+        else {
+            dictionarySlang.put(sw, newdf);
+            System.out.println("Adding a new slang word successfully!");
+        }
+        
+        pauseScreen();
+        //showMenu();
     }
 }
