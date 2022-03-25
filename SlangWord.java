@@ -83,10 +83,22 @@ public class SlangWord {
                 result.add(i);
             }
         }
-        System.out.println("Slang word: ");
+        System.out.println("Slang words: ");
         System.out.println(result);
         pauseScreen();
         // showMenu();
     }
 
+    // mode 3: Show history of slang words which are searched
+    public static void showHistory() {
+        clearScreen();
+
+        System.out.println("Your search history is: ");
+        for (String i : historySlangWord) {
+            System.out.println(i);
+        }
+
+        pauseScreen();
+        // showMenu();
+    }
 }
