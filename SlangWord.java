@@ -51,12 +51,12 @@ public class SlangWord {
         }
     }
 
-    // mode 1: finding defination by slang word
+    // mode 1: finding definition by slang word
     public static void findBySlangWord() {
         clearScreen();
 
-        System.out.println("-----Finding defination by slang word-----");
-        System.out.println("Please! Enter defination which you want to search: ");
+        System.out.println("-----Finding definition by slang word-----");
+        System.out.println("Please! Enter definition which you want to search: ");
         String info = word.nextLine();
         info = info.toUpperCase();
         List<String> resultInfo = dictionarySlang.get(info);
@@ -68,18 +68,18 @@ public class SlangWord {
         // showMenu();
     }
 
-    // mode 2: finding slang word by defination
-    public static void findByDefination() {
+    // mode 2: finding slang word by definition
+    public static void findByDefinition() {
         clearScreen();
 
-        System.out.println("-----Finding slang word by defination-----");
+        System.out.println("-----Finding slang word by definition-----");
         System.out.println("Please! Enter slang word which you want to search: ");
-        String defination = word.nextLine();
-        historySlangWord.add(defination);
+        String definition = word.nextLine();
+        historySlangWord.add(definition);
 
         List<String> result = new ArrayList<>();
         for (String i : dictionarySlang.keySet()) {
-            if (dictionarySlang.get(i).contains(defination)) {
+            if (dictionarySlang.get(i).contains(definition)) {
                 result.add(i);
             }
         }
@@ -112,7 +112,7 @@ public class SlangWord {
         String sw = word.nextLine();
         sw = sw.toUpperCase();
 
-        System.out.println("Please! Enter its defination which you want to add: ");
+        System.out.println("Please! Enter its definition which you want to add: ");
         String defi = word.nextLine();
 
         List<String> newdf = new ArrayList<>();
@@ -145,4 +145,44 @@ public class SlangWord {
         pauseScreen();
         //showMenu();
     }
+
+    //mode 5: edit slangword
+    public static void editSlangword(){
+        clearScreen();
+
+        System.out.println("Please! Enter slangword you want to edit: ");
+        String sw = word.nextLine();
+        sw = sw.toUpperCase();
+
+        if(!dictionarySlang.containsKey(sw)){
+            System.out.println("This slangword don't exist");
+            pauseScreen();
+            //showMenu();
+        }
+
+        System.out.println("Definition: ");
+        List<String> definition = dictionarySlang.get(sw);
+        List<String> definitions = new ArrayList<>();
+        int count = 1;
+        for(String i : definition){
+            definitions.add(i);
+            System.out.println(count + ". " + i);
+            count++;
+        }
+
+        System.out.println("Which definition do you want to change? \noption: ");
+        int index=word.nextInt();
+
+        definitions.remove(index-1);
+        System.out.println("Enter new edfinition of this slangword: ");
+        String newdf = word.nextLine();
+        List<String> newdefi = new ArrayList<>();
+        newdefi.add(newdf);
+        dictionarySlang.put(sw, newdefi);
+
+        pauseScreen();
+        //showMenu();
+    }
+
+    //mode 6. Remode Slangword
 }
