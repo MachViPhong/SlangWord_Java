@@ -23,7 +23,7 @@ public class SlangWord {
     // get data into file slang.txt
     public static void getData() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(".slang.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("./slang.txt")));
             String line = br.readLine();
             while (line != null) {
                 String[] name = line.split("`");
@@ -40,7 +40,7 @@ public class SlangWord {
 
     public static void getHistory() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(".history.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("./history.txt")));
             String line = br.readLine();
             while (line != null) {
                 historySlangWord.add(line);
@@ -125,55 +125,54 @@ public class SlangWord {
                 System.out.println("Do you want to override this slang word (because this slang word has existed)");
                 System.out.println("(Y/N): ");
                 choose = word.nextLine();
-            } while ((choose.equals("Y") == false) && (choose.equals("y") == false) && (choose.equals("N") == false) && (choose.equals("n") == false));
-            if (choose.equals("Y") || choose.equals("y")){
+            } while ((choose.equals("Y") == false) && (choose.equals("y") == false) && (choose.equals("N") == false)
+                    && (choose.equals("n") == false));
+            if (choose.equals("Y") || choose.equals("y")) {
                 dictionarySlang.put(sw, newdf);
-            }
-            else {
+            } else {
                 List<String> oldDefi = dictionarySlang.get(sw);
-                for(String i : oldDefi){
+                for (String i : oldDefi) {
                     newdf.add(i);
                 }
                 dictionarySlang.put(sw, newdf);
             }
-        }
-        else {
+        } else {
             dictionarySlang.put(sw, newdf);
             System.out.println("Adding a new slang word successfully!");
         }
-        
+
         pauseScreen();
-        //showMenu();
+        // showMenu();
     }
 
-    //mode 5: edit slangword
-    public static void editSlangword(){
+    // mode 5: edit slangword
+    public static void editSlangword() {
         clearScreen();
 
         System.out.println("Please! Enter slangword you want to edit: ");
         String sw = word.nextLine();
         sw = sw.toUpperCase();
 
-        if(!dictionarySlang.containsKey(sw)){
+        if (!dictionarySlang.containsKey(sw)) {
             System.out.println("This slangword don't exist");
             pauseScreen();
-            //showMenu();
+            // showMenu();
         }
 
         System.out.println("Definition: ");
         List<String> definition = dictionarySlang.get(sw);
         List<String> definitions = new ArrayList<>();
         int count = 1;
-        for(String i : definition){
+        for (String i : definition) {
             definitions.add(i);
             System.out.println(count + ". " + i);
             count++;
         }
 
         System.out.println("Which definition do you want to change? \noption: ");
-        int index=word.nextInt();
+        int index = word.nextInt();
 
-        definitions.remove(index-1);
+        definitions.remove(index - 1);
         System.out.println("Enter new edfinition of this slangword: ");
         String newdf = word.nextLine();
         List<String> newdefi = new ArrayList<>();
@@ -181,8 +180,28 @@ public class SlangWord {
         dictionarySlang.put(sw, newdefi);
 
         pauseScreen();
-        //showMenu();
+        // showMenu();
     }
 
-    //mode 6. Remode Slangword
-}
+    // mode 6. Remode Slangword
+    public static void removeSlangWord() {
+        clearScreen();
+
+        System.out.println("Please! Enter slang word you want to remove: ");
+        String sw = word.nextLine();
+        System.out.println(sw + ": " + dictionarySlang.get(sw));
+
+        if (dictionarySlang.containsKey(sw)) {
+            System.out.println("Are you sure to remove this slangword");
+            System.out.println("Y/N: ");
+            String choose = word.nextLine();
+            if (choose.equals("Y") || choose.equals("y")) {
+                dictionarySlang.remove(sw);
+                System.out.println("Remove successfully!");
+            }
+        }
+        pauseScreen();
+        // showMenu();
+    }
+
+    
