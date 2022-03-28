@@ -56,7 +56,7 @@ public class SlangWord {
         clearScreen();
 
         System.out.println("-----Finding definition by slang word-----");
-        System.out.println("Please! Enter definition which you want to search: ");
+        System.out.println("Please! Enter slangword which you want to search: ");
         String info = word.nextLine();
         info = info.toUpperCase();
         List<String> resultInfo = dictionarySlang.get(info);
@@ -73,7 +73,7 @@ public class SlangWord {
         clearScreen();
 
         System.out.println("-----Finding slang word by definition-----");
-        System.out.println("Please! Enter slang word which you want to search: ");
+        System.out.println("Please! Enter definition which you want to search: ");
         String definition = word.nextLine();
         historySlangWord.add(definition);
 
@@ -227,5 +227,23 @@ public class SlangWord {
         // showMenu();
     }
 
-   
+    // mode 8: Random one slangword 
+    public static String randomOneSlangWord(){
+        clearScreen();
+
+        Random rd = new Random();
+        String answer = "";
+        int count = 0;
+        int randomnumber = rd.nextInt(dictionarySlang.size());
+        for(String i : dictionarySlang.keySet()){
+            if(count == randomnumber){
+                answer = i;
+                break;
+            }
+            count++;
+        }
+        return answer;
+    }
+
+    
 }
