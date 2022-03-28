@@ -227,16 +227,16 @@ public class SlangWord {
         // showMenu();
     }
 
-    // mode 8: Random one slangword 
-    public static String randomOneSlangWord(){
+    // mode 8: Random one slangword
+    public static String randomOneSlangWord() {
         clearScreen();
 
         Random rd = new Random();
         String answer = "";
         int count = 0;
         int randomnumber = rd.nextInt(dictionarySlang.size());
-        for(String i : dictionarySlang.keySet()){
-            if(count == randomnumber){
+        for (String i : dictionarySlang.keySet()) {
+            if (count == randomnumber) {
                 answer = i;
                 break;
             }
@@ -245,5 +245,75 @@ public class SlangWord {
         return answer;
     }
 
-    
+    // mode 9: minigaem random 1 slangword and choose the correct definition
+    public static void minigameSlangWord() {
+        clearScreen();
+
+        Random rd = new Random();
+        List<String> answerList = new ArrayList<>();
+
+        // create question and answer correct, answer A
+        String ans1 = randomOneSlangWord();
+        String question = ans1;
+        List<String> defi1 = dictionarySlang.get(ans1);
+        ans1 = defi1.get(rd.nextInt(defi1.size()));
+        answerList.add(ans1);
+        String correctAns = ans1;
+
+        // create answer B
+        String ans2 = randomOneSlangWord();
+        List<String> defi2 = dictionarySlang.get(ans2);
+        ans2 = defi2.get(rd.nextInt(defi2.size()));
+        answerList.add(ans2);
+
+        // create answer C
+        String ans3 = randomOneSlangWord();
+        List<String> defi3 = dictionarySlang.get(ans3);
+        ans3 = defi3.get(rd.nextInt(defi3.size()));
+        answerList.add(ans3);
+
+        // create answer D
+        String ans4 = randomOneSlangWord();
+        List<String> defi4 = dictionarySlang.get(ans4);
+        ans4 = defi4.get(rd.nextInt(defi4.size()));
+        answerList.add(ans4);
+
+        System.out.println("Question: What is the Definition for " + question);
+
+        // random answer A
+        ans1 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans1);
+        System.out.print("A. " + ans1 + "\t");
+
+        // random answer B
+        ans2 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans2);
+        System.out.print("B. " + ans2 + "\t");
+
+        // random answer C
+        ans3 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans3);
+        System.out.print("C. " + ans3 + "\t");
+
+        // random answer D
+        ans4 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans4);
+        System.out.println("D. " + ans4);
+
+        System.out.print("Your choice is: ");
+        String choice = word.nextLine();
+        if ((choice.equals("A") || choice.equals("a")) && ans1 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else if ((choice.equals("B") || choice.equals("b")) && ans2 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else if ((choice.equals("C") || choice.equals("c")) && ans3 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else if ((choice.equals("D") || choice.equals("d")) && ans4 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else
+            System.out.println("Sorry , Your Answer is incorrect . The Answer is " + correctAns);
+
+        pauseScreen();
+        //showMenu();
+    }
 }
