@@ -204,4 +204,28 @@ public class SlangWord {
         // showMenu();
     }
 
-    
+    // mode 7: Reset Slangword dictionary
+    public static void resetSlangwordDictionary() {
+        clearScreen();
+        dictionarySlang.clear();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File("./default.txt")));
+            String line = br.readLine();
+            while (line != null) {
+                String[] name = line.split("`");
+                String[] define = name[1].split("\\|");
+                List<String> temp = Arrays.asList(define);
+                dictionarySlang.put(name[0], temp);
+            }
+            br.close();
+        } catch (Exception ex) {
+            System.out.println("ERROR " + ex);
+        }
+        System.out.println("Reset Slangword list to default successfully!");
+        pauseScreen();
+        // showMenu();
+    }
+
+   
+}
