@@ -314,6 +314,73 @@ public class SlangWord {
             System.out.println("Sorry , Your Answer is incorrect . The Answer is " + correctAns);
 
         pauseScreen();
-        //showMenu();
+        // showMenu();
+    }
+
+    // mode 10: minigaem random 1 definition and choose the correct slangword
+    public static void minigameDefinition() {
+        clearScreen();
+
+        Random rd = new Random();
+        List<String> answerList = new ArrayList<>();
+
+        // create answer A
+        String ans1 = randomOneSlangWord();
+        answerList.add(ans1);
+
+        // create answer B
+        String ans2 = randomOneSlangWord();
+        answerList.add(ans2);
+
+        // create answer C
+        String ans3 = randomOneSlangWord();
+        answerList.add(ans3);
+
+        // create answer D
+        String ans4 = randomOneSlangWord();
+        answerList.add(ans4);
+
+        // create question and correct answer
+        String correctAns = ans1;
+        List<String> question = dictionarySlang.get(ans1);
+
+        System.out.println("Question: What is the Slangword for " + question.get(rd.nextInt(question.size())));
+
+        // random answer A
+        ans1 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans1);
+        System.out.print("A. " + ans1 + "\t");
+
+        // random answer B
+        ans2 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans2);
+        System.out.print("B. " + ans2 + "\t");
+
+        // random answer C
+        ans3 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans3);
+        System.out.print("C. " + ans3 + "\t");
+
+        // random answer D
+        ans4 = answerList.get(rd.nextInt(answerList.size()));
+        answerList.remove(ans4);
+        System.out.println("D. " + ans4);
+
+        // user give a choice for this question
+        System.out.print("Your choice is: ");
+        String choice = word.nextLine();
+        if ((choice.equals("A") || choice.equals("a")) && ans1 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else if ((choice.equals("B") || choice.equals("b")) && ans2 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else if ((choice.equals("C") || choice.equals("c")) && ans3 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else if ((choice.equals("D") || choice.equals("d")) && ans4 == correctAns)
+            System.out.println("Congratulations , Your Answer is correct");
+        else
+            System.out.println("Sorry , Your Answer is incorrect . The Answer is " + correctAns);
+
+        pauseScreen();
+        // showMenu();
     }
 }
