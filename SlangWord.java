@@ -2,9 +2,10 @@ import java.io.*;
 import java.util.*;
 
 public class SlangWord {
-    public static void main(String[] args) {
-        System.out.println("Slang Word");
-    }
+
+    public static HashMap<String, List<String>> dictionarySlang = new HashMap<String, List<String>>();
+    public static List<String> historySlangWord = new ArrayList<>();
+    public static Scanner word = new Scanner(System.in);
 
     public final static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -13,24 +14,27 @@ public class SlangWord {
 
     public static void pauseScreen() {
         System.out.println("Press Any Key To Continue...");
-        new Scanner(System.in).nextLine();
+        word.nextLine();
     }
-
-    public static HashMap<String, List<String>> dictionarySlang = new HashMap<String, List<String>>();
-    public static List<String> historySlangWord = new ArrayList();
-    public static Scanner word = new Scanner(System.in);
 
     // get data into file slang.txt
     public static void getData() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("./slang.txt")));
+
+            BufferedReader br = new BufferedReader(new FileReader(new File("slang.txt")));
+
             String line = br.readLine();
-            while (line != null) {
+            while (true) {
+                if (line == null)
+                    break;
+
                 String[] name = line.split("`");
                 String[] define = name[1].split("\\|");
                 List<String> temp = Arrays.asList(define);
                 dictionarySlang.put(name[0], temp);
+                line = br.readLine();
             }
+
             br.close();
 
         } catch (Exception ex) {
@@ -40,11 +44,16 @@ public class SlangWord {
 
     public static void getHistory() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("./history.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("history.txt")));
+
             String line = br.readLine();
-            while (line != null) {
+            while (true) {
+                if (line == null)
+                    break;
                 historySlangWord.add(line);
+                line = br.readLine();
             }
+
             br.close();
         } catch (Exception ex) {
             System.out.println("ERROR" + ex);
@@ -53,7 +62,7 @@ public class SlangWord {
 
     // mode 1: finding definition by slang word
     public static void findBySlangWord() {
-        clearScreen();
+        // clearScreen();
 
         System.out.println("-----Finding definition by slang word-----");
         System.out.println("Please! Enter slangword which you want to search: ");
@@ -70,7 +79,7 @@ public class SlangWord {
 
     // mode 2: finding slang word by definition
     public static void findByDefinition() {
-        clearScreen();
+        // clearScreen();
 
         System.out.println("-----Finding slang word by definition-----");
         System.out.println("Please! Enter definition which you want to search: ");
@@ -91,20 +100,23 @@ public class SlangWord {
 
     // mode 3: Show history of slang words which are searched
     public static void showHistory() {
-        clearScreen();
+        //clearScreen();
 
         System.out.println("Your search history is: ");
-        for (String i : historySlangWord) {
-            System.out.println(i);
+        if(historySlangWord.size() == 0){
+            System.out.println("History is empty!");
+        }
+        else{
+            for (String i : historySlangWord) {
+                System.out.println(i);
+            }
         }
 
         pauseScreen();
-        // showMenu();
     }
 
     // mode 4: Adding a new slang word into slang.txt
     public static void addNewSW() {
-        clearScreen();
 
         System.out.println("Adding a new slang word into file slang.txt");
 
@@ -122,7 +134,7 @@ public class SlangWord {
 
             String choose;
             do {
-                System.out.println("Do you want to override this slang word (because this slang word has existed)");
+                System.out.println("Do you want to overwrite this slang word (because this slang word has existed)");
                 System.out.println("(Y/N): ");
                 choose = word.nextLine();
             } while ((choose.equals("Y") == false) && (choose.equals("y") == false) && (choose.equals("N") == false)
@@ -147,7 +159,7 @@ public class SlangWord {
 
     // mode 5: edit slangword
     public static void editSlangword() {
-        clearScreen();
+        // clearScreen();
 
         System.out.println("Please! Enter slangword you want to edit: ");
         String sw = word.nextLine();
@@ -171,13 +183,13 @@ public class SlangWord {
 
         System.out.println("Which definition do you want to change? \noption: ");
         int index = word.nextInt();
+        word.nextLine();
 
         definitions.remove(index - 1);
-        System.out.println("Enter new edfinition of this slangword: ");
+        System.out.println("Enter new definition of this slangword: ");
         String newdf = word.nextLine();
-        List<String> newdefi = new ArrayList<>();
-        newdefi.add(newdf);
-        dictionarySlang.put(sw, newdefi);
+        definitions.add(newdf);
+        dictionarySlang.put(sw, definitions);
 
         pauseScreen();
         // showMenu();
@@ -185,10 +197,11 @@ public class SlangWord {
 
     // mode 6. Remode Slangword
     public static void removeSlangWord() {
-        clearScreen();
+        // clearScreen();
 
         System.out.println("Please! Enter slang word you want to remove: ");
         String sw = word.nextLine();
+        sw = sw.toUpperCase();
         System.out.println(sw + ": " + dictionarySlang.get(sw));
 
         if (dictionarySlang.containsKey(sw)) {
@@ -199,6 +212,8 @@ public class SlangWord {
                 dictionarySlang.remove(sw);
                 System.out.println("Remove successfully!");
             }
+        } else {
+            System.out.println("Slangword is not existed!");
         }
         pauseScreen();
         // showMenu();
@@ -206,18 +221,21 @@ public class SlangWord {
 
     // mode 7: Reset Slangword dictionary
     public static void resetSlangwordDictionary() {
-        clearScreen();
+        // clearScreen();
         dictionarySlang.clear();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("./default.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("default.txt")));
+
             String line = br.readLine();
             while (line != null) {
                 String[] name = line.split("`");
                 String[] define = name[1].split("\\|");
                 List<String> temp = Arrays.asList(define);
                 dictionarySlang.put(name[0], temp);
+                line = br.readLine();
             }
+
             br.close();
         } catch (Exception ex) {
             System.out.println("ERROR " + ex);
@@ -229,7 +247,7 @@ public class SlangWord {
 
     // mode 8: Random one slangword
     public static String randomOneSlangWord() {
-        clearScreen();
+        // clearScreen();
 
         Random rd = new Random();
         String answer = "";
@@ -247,7 +265,7 @@ public class SlangWord {
 
     // mode 9: minigaem random 1 slangword and choose the correct definition
     public static void minigameSlangWord() {
-        clearScreen();
+        // clearScreen();
 
         Random rd = new Random();
         List<String> answerList = new ArrayList<>();
@@ -319,7 +337,7 @@ public class SlangWord {
 
     // mode 10: minigaem random 1 definition and choose the correct slangword
     public static void minigameDefinition() {
-        clearScreen();
+        // clearScreen();
 
         Random rd = new Random();
         List<String> answerList = new ArrayList<>();
@@ -383,4 +401,161 @@ public class SlangWord {
         pauseScreen();
         // showMenu();
     }
+
+    // update file history.txt
+    public static void updateHistorytxt() {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("history.txt")));
+
+            for (String i : historySlangWord) {
+                bw.write(i + "\n");
+            }
+
+            bw.close();
+        } catch (Exception ex) {
+            System.out.println("ERROR" + ex);
+        }
+    }
+
+    // update file slang.txt
+    public static void updateSlangtxt() {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("slang.txt")));
+            for (String i : dictionarySlang.keySet()) {
+                bw.write(i + "`");
+                List<String> temp = dictionarySlang.get(i);
+                for (int j = 0; j < temp.size(); j++) {
+                    bw.write(temp.get(j));
+                    if ((j + 1) < temp.size()) {
+                        bw.write("|");
+                    }
+                }
+                bw.write("\n");
+            }
+
+            bw.close();
+        } catch (Exception ex) {
+            System.out.println("ERROR" + ex);
+        }
+    }
+
+    public static void showMenu() {
+        // clearScreen();
+        System.out.println("\n---Menu---");
+        System.out.println("1. Search by SlangWord ");
+        System.out.println("2. Search by Definition ");
+        System.out.println("3. Show history ");
+        System.out.println("4. Add Slangword ");
+        System.out.println("5. Edit Slangword ");
+        System.out.println("6. Delete Slangword ");
+        System.out.println("7. Reset to default ");
+        System.out.println("8. Random a slangword ");
+        System.out.println("9. Minigame find correct definition ");
+        System.out.println("10. Minigame find correct slangword ");
+        System.out.println("11. Clear History");
+        System.out.println("12. Exit ");
+        System.out.println("YOUR CHOICE:  ");
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("Hello");
+        getData();
+        System.out.println("Hello");
+        getHistory();
+        System.out.println("Hello");
+
+        int choice = 0;
+        do {
+            showMenu();
+            String trans = word.nextLine();
+            try {
+                choice = Integer.parseInt(trans);
+            } catch (Exception ex) {
+                System.out.println("Wrong option");
+                continue;
+            }
+        
+            switch (choice) {
+                case 1: {
+                    findBySlangWord();
+                    updateHistorytxt();
+                    break;
+                }
+                case 2: {
+                    findByDefinition();
+                    updateHistorytxt();
+                    break;
+                }
+                case 3: {
+                    showHistory();
+                    break;
+                }
+                case 4: {
+                    addNewSW();
+                    updateSlangtxt();
+                    break;
+                }
+                case 5: {
+                    editSlangword();
+                    updateSlangtxt();
+                    break;
+                }
+                case 6: {
+                    removeSlangWord();
+                    updateSlangtxt();
+                    break;
+                }
+                case 7: {
+                    resetSlangwordDictionary();
+                    updateSlangtxt();
+                    break;
+                }
+                case 8: {
+                    String randomSw = randomOneSlangWord();
+                    System.out.println("Random slangword\nSlangword is: " + randomSw);
+                    System.out.println("Its definition is: " + dictionarySlang.get(randomSw));
+
+                    pauseScreen();
+                    break;
+                }
+                case 9: {
+                    minigameSlangWord();
+                    break;
+                }
+                case 10: {
+                    minigameDefinition();
+                    break;
+                }
+                case 11: {
+                    // clearScreen();
+                    historySlangWord.clear();
+                    updateHistorytxt();
+                    System.out.println("Clearing history successfully!");
+
+                    pauseScreen();
+                    break;
+                }
+                case 12: {
+                    // clearScreen();
+                    updateHistorytxt();
+                    updateSlangtxt();
+                    System.out.println("\nThanks for using our program!");
+                    System.out.println("Have a nice day!");
+                    word.nextLine();
+                    word.close();
+                    System.exit(0);
+                    break;
+                }
+                default: {
+                    System.out.println("This option is not exist!");
+                    System.out.println("Please! Enter another option.");
+                    // showMenu();
+                    break;
+                }
+
+            }
+        } while (choice != 12);
+    }
+    // word.close();
 }
