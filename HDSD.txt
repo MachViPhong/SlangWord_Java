@@ -1,0 +1,5 @@
+* Hướng dẫn chạy chương trình:
+Cách 1: Mở file jar
+	- Chỉ cần click file Run.bat thì file jar tự động mở.
+Cách 2: Chạy code trong thư mục source
+	- Run file SlangWord.java để khởi động chương trình

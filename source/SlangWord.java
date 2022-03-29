@@ -7,11 +7,7 @@ public class SlangWord {
     public static List<String> historySlangWord = new ArrayList<>();
     public static Scanner word = new Scanner(System.in);
 
-    public final static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
+    
     public static void pauseScreen() {
         System.out.println("Press Any Key To Continue...");
         word.nextLine();
@@ -21,7 +17,7 @@ public class SlangWord {
     public static void getData() {
         try {
 
-            BufferedReader br = new BufferedReader(new FileReader(new File("slang.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("./source/slang.txt")));
 
             String line = br.readLine();
             while (true) {
@@ -44,7 +40,7 @@ public class SlangWord {
 
     public static void getHistory() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("history.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("./source/history.txt")));
 
             String line = br.readLine();
             while (true) {
@@ -225,7 +221,7 @@ public class SlangWord {
         dictionarySlang.clear();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File("default.txt")));
+            BufferedReader br = new BufferedReader(new FileReader(new File("./source/default.txt")));
 
             String line = br.readLine();
             while (line != null) {
@@ -405,7 +401,7 @@ public class SlangWord {
     // update file history.txt
     public static void updateHistorytxt() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("history.txt")));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./source/history.txt")));
 
             for (String i : historySlangWord) {
                 bw.write(i + "\n");
@@ -420,7 +416,7 @@ public class SlangWord {
     // update file slang.txt
     public static void updateSlangtxt() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("slang.txt")));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File("./source/slang.txt")));
             for (String i : dictionarySlang.keySet()) {
                 bw.write(i + "`");
                 List<String> temp = dictionarySlang.get(i);
@@ -461,9 +457,9 @@ public class SlangWord {
 
         System.out.println("Hello");
         getData();
-        System.out.println("Hello");
+        
         getHistory();
-        System.out.println("Hello");
+        
 
         int choice = 0;
         do {
